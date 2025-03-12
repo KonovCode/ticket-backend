@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+    app:
+        image: php:8.2-fpm
+        build:
+            context: .
+            dockerfile: _docker/php/Dockerfile
+        container_name: app_ticket_backend
+        volumes:
+            - ./:/var/www/
+        networks:
+            - app_ticket_backend
+        depends_on:
+            - database
+        restart: unless-stopped
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx_ticket_backend
+        volumes:
+            - ./:/var/www/
+            - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
+        ports:
+            - "8088:80"
+        networks:
+            - app_ticket_backend
+        depends_on:
+            - app
+        restart: unless-stopped
+
+    database:
+        image: postgres:16
+        container_name: database_ticket_backend
+        ports:
+            - "8102:5432"
+        volumes:
+            - ./tmp/db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: ticket_db
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+        restart: always
+        networks:
+            - app_ticket_backend
+
+networks:
+    app_ticket_backend:
+        driver: bridge
+
