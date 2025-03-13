@@ -25,7 +25,7 @@ class AuthService
         ]);
 
         return response()->json([
-            'token' => $user->createToken('api-token')->plainTextToken,
+            'token' => $user->createToken('api-token', ['default'])->plainTextToken,
         ]);
     }
 
@@ -44,9 +44,17 @@ class AuthService
             ]);
         }
 
+        $token = $user->tokens()->first();
+
+        $abilities = $token ? $token->abilities : [];
+
         $user->tokens()->delete();
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        if($abilities) {
+            $token = $user->createToken('api-token', $abilities)->plainTextToken;
+        } else {
+            $token = $user->createToken('api-token')->plainTextToken;
+        }
 
         return response()->json([
             'token' => $token,
