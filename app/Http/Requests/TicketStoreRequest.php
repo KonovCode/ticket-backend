@@ -29,6 +29,7 @@ class TicketStoreRequest extends FormRequest
             'city' => 'required|string',
             'price' => 'required|numeric|min:1|max:99999.99',
             'address' => 'required|string',
+            'total_tickets' => 'required|integer|min:1|max:99999',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketStoreRequest;
 use App\Http\Requests\TicketUpdateRequest;
 use App\Models\Ticket;
+use App\Services\TicketService;
 
 class TicketController extends Controller
 {
@@ -36,6 +37,8 @@ class TicketController extends Controller
 
         $data = $request->validated();
 
+        $data['available_tickets'] = $data['total_tickets'];
+
         $ticket = $user->tickets()->create($data);
 
         return response()->json([
@@ -44,13 +47,17 @@ class TicketController extends Controller
         ]);
     }
 
-    public function update(TicketUpdateRequest $request, int $ticket_id)
+    public function update(TicketUpdateRequest $request, int $ticket_id, TicketService $ticketService)
     {
         $user = auth()->user();
 
         $ticket = $user->tickets()->findOrFail($ticket_id);
 
         $data = $request->validated();
+
+        if(isset($data['total_tickets'])) {
+            $ticketService->updateTicketQuantity($ticket, $data['total_tickets']);
+        }
 
         $ticket->update($data);
 

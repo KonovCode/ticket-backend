@@ -25,6 +25,8 @@ class TicketFactory extends Factory
             'time' => '14:50',
             'price' => 100,
             'city' => 'Dnepr',
+            'total_tickets' => 100,
+            'available_tickets' => 100,
             'address' => 'Dovatora 88',
         ];
     }

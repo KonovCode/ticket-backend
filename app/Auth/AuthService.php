@@ -58,7 +58,7 @@ class AuthService
 
         return response()->json([
             'token' => $token,
-        ]);
+        ], 200);
     }
 
     public function logout(Request $request): \Illuminate\Http\JsonResponse
