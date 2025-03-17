@@ -47,7 +47,8 @@ class TicketControllerTest extends TestCase
             'price' => 100,
             'city' => 'Dnepr',
             'address' => 'Dovatora 88',
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
+            'total_tickets' => 80,
         ]);
 
         $response = $this->withHeaders([
@@ -80,6 +81,8 @@ class TicketControllerTest extends TestCase
             'price' => 100,
             'city' => 'Dnepr',
             'address' => 'Dovatora 88',
+            'total_tickets' => 80,
+
         ];
 
         $response = $this->withHeaders([
@@ -101,6 +104,7 @@ class TicketControllerTest extends TestCase
             'price' => 100,
             'city' => 'Dnepr',
             'address' => 'Dovatora 88',
+            'total_tickets' => 80,
         ];
 
         $response = $this->withHeaders([
@@ -122,6 +126,7 @@ class TicketControllerTest extends TestCase
             'price' => 888,
             'city' => 'Odessa',
             'time' => '18:20',
+            'total_tickets' => 80,
         ];
 
         $response = $this->withHeaders([
@@ -135,6 +140,7 @@ class TicketControllerTest extends TestCase
             'price' => 888,
             'city' => 'Odessa',
             'time' => '18:20',
+            'total_tickets' => 80,
             'title' => $ticket->title,
             'description' => $ticket->description,
         ]);

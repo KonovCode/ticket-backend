@@ -29,6 +29,7 @@ class TicketUpdateRequest extends FormRequest
             'city' => 'nullable|string',
             'price' => 'nullable|numeric|min:1|max:99999.99',
             'address' => 'nullable|string',
+            'total_tickets' => 'nullable|integer|min:1|max:99999',
         ];
     }
 }
